@@ -4,19 +4,21 @@
 # A basic black and white python texture generator
 import numpy as np
 import sys,getopt
+import random
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy import misc
 
 n=100
 b=0
+show=True
 outfile='out.png'
 x=np.random.normal(0,1,n)
 y=np.random.normal(0,1,n)
 helptext='texturegen.py -o <outputfilename> -n <numiterations> -m <generationmode> -b <blur level>'
 
 try:
-    opts,args=getopt.getopt(sys.argv[1:],"hn:m:b:o:",["num=","mode=","blur=","out="])
+    opts,args=getopt.getopt(sys.argv[1:],"hn:m:b:o:",["num=","mode=","blur=","out=","noshow"])
 except getopt.GetoptError:
     print(helptext)
     sys.exit(2)
@@ -28,6 +30,8 @@ for opt,arg in opts:
         n=arg
     elif opt in ("-o","--out"):
         outfile=arg
+    elif opt in ("--noshow"):
+        show=False
     elif opt in ("-m","--mode"):
         if arg=='plaid':
             x=np.random.normal(0,1,n)
@@ -42,7 +46,10 @@ for opt,arg in opts:
             x=np.random.normal(np.random.rand(),np.random.rand(),n)
             y=np.random.normal(np.random.rand(),np.random.rand(),n)
             np.random.shuffle(x)
-            
+            np.random.shuffle(y)
+        elif arg=='rand3':
+            x=np.random.normal(random.random(),random.random(),n)
+            y=np.random.normal(random.random(),random.random(),n)
         else:
             x=np.linspace(0,4,n)
             y=np.linspace(0,3,n)
@@ -62,6 +69,8 @@ Z=f(X,Y)
 for i in range(int(b)):
     Z=signal.convolve2d(Z,k,mode='full',boundary='wrap')
 
-plt.imshow(Z)
-plt.show()
+if show:
+    plt.imshow(Z)
+    plt.show()
+
 misc.imsave(outfile,Z)
