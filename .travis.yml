@@ -1,8 +1,15 @@
 language: python
 python:
         - "3.6"
-before_install:
-        - pip install numpy
-        - pip install scipy
-        - pip install Pillow
-        - pip install matplotlib
+#before_install:
+#        - pip install numpy
+#        - pip install scipy
+#        - pip install Pillow
+#        - pip install matplotlib
+install:
+        - pip install numpy scipy Pillow matplotlib
+script: 
+        - runtests.sh
+
+notifications:
+        email: false
