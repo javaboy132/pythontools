@@ -1,0 +1,6 @@
+language: python
+before_install:
+        - pip install numpy
+        - pip install scipy
+        - pip install Pillow
+        - pip install matplotlib
