@@ -19,10 +19,10 @@ def main(argv):
             print(helptext)
             sys.exit()
         elif opt in ("-n","--numiterations"):
-            numiterations=arg
+            numiterations=int(arg)
 
     pi=2
-    for i in range(arg):
+    for i in range(numiterations):
         pi=pi*((4*(i+1)**2)/(4*(i+1)**2-1))
 
     print(pi)
